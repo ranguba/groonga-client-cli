@@ -23,7 +23,6 @@ require "groonga/command/parser"
 require "groonga/client"
 
 require "groonga-client-cli/version"
-require "groonga-client-cli/default"
 
 module GroongaClientCLI
   class GroongaClient
@@ -32,7 +31,7 @@ module GroongaClientCLI
       @host     = "localhost"
       @port     = nil
 
-      @read_timeout = Default::READ_TIMEOUT
+      @read_timeout = Groonga::Client::Default::READ_TIMEOUT
 
       @runner_options = {
         :split_load_chunk_size => 10000,

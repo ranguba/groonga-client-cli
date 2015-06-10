@@ -56,7 +56,7 @@ Gem::Specification.new do |spec|
     spec.executables = Dir.glob("*")
   end
 
-  spec.add_runtime_dependency("groonga-client")
+  spec.add_runtime_dependency("groonga-client", ">= 0.1.6")
   spec.add_runtime_dependency("groonga-command-parser")
 
   spec.add_development_dependency("bundler")
