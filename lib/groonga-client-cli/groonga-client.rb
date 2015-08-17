@@ -55,12 +55,18 @@ module GroongaClientCLI
       else
         command_file_paths.each do |command_file_path|
           File.open(command_file_path) do |command_file|
+            last_line = nil
             command_file.each_line do |line|
+              last_line = line
               runner << line
+            end
+            if last_line and !last_line.end_with?("\n")
+              runner << "\n"
             end
           end
         end
       end
+      runner.finish
 
       true
     end
@@ -136,6 +142,10 @@ module GroongaClientCLI
 
       def <<(line)
         @parser << line
+      end
+
+      def finish
+        @parser.finish
       end
 
       private
