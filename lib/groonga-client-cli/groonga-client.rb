@@ -1,4 +1,4 @@
-# Copyright (C) 2015  Kouhei Sutou <kou@clear-code.com>
+# Copyright (C) 2015-2016  Kouhei Sutou <kou@clear-code.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,6 +17,7 @@
 require "ostruct"
 require "optparse"
 require "json"
+require "securerandom"
 
 require "groonga/command/parser"
 
@@ -35,6 +36,7 @@ module GroongaClientCLI
 
       @runner_options = {
         :split_load_chunk_size => 10000,
+        :generate_request_id   => false,
       }
     end
 
@@ -116,6 +118,12 @@ module GroongaClientCLI
         @runner_options[:split_load_chunk_size] = size
       end
 
+      parser.on("--[no-]generate-request-id",
+                "Add auto generated request ID to all commands.",
+                "(#{@runner_options[:generate_request_id]})") do |boolean|
+        @runner_options[:generate_request_id] = boolean
+      end
+
       command_file_paths = parser.parse(argv)
 
       @port ||= default_port(@protocol)
@@ -136,6 +144,7 @@ module GroongaClientCLI
       def initialize(client, options={})
         @client = client
         @split_load_chunk_size = options[:split_load_chunk_size] || 10000
+        @generate_request_id   = options[:generate_request_id]
         @load_values = []
         @parser = create_command_parser
       end
@@ -191,6 +200,7 @@ module GroongaClientCLI
       end
 
       def run_command(command)
+        command[:request_id] ||= SecureRandom.uuid if @generate_request_id
         response = @client.execute(command)
         case command.output_type
         when :json
