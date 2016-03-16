@@ -1,5 +1,13 @@
 # NEWS
 
+## 1.0.2 - 2016-03-16
+
+### Improvements
+
+  * Accepted file that doesn't have newline at the end.
+  * Added `--generate-request-id` option that sets automatically
+    generated request ID to each command.
+
 ## 1.0.1 - 2015-06-10
 
 ### Improvements
