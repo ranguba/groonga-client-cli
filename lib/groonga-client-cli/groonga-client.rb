@@ -193,7 +193,14 @@ module GroongaClientCLI
       def consume_load_values(load_command)
         return if @load_values.empty?
 
-        load_command[:values] = JSON.generate(@load_values)
+        values_json = "["
+        @load_values.each_with_index do |value, i|
+          values_json << "," unless i.zero?
+          values_json << "\n"
+          values_json << JSON.generate(value)
+        end
+        values_json << "\n]\n"
+        load_command[:values] = values_json
         run_command(load_command)
         @load_values.clear
         load_command[:values] = nil
