@@ -1,5 +1,14 @@
 # NEWS
 
+## 1.0.3 - 2016-08-19
+
+### Improvements
+
+  * Improved `load` command data send performance.
+
+  * Added `--chunk` option that uses `Transfer-Encoding: chunked` for
+    `load` command data.
+
 ## 1.0.2 - 2016-03-16
 
 ### Improvements
