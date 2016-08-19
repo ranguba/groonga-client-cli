@@ -34,6 +34,8 @@ module GroongaClientCLI
 
       @read_timeout = Groonga::Client::Default::READ_TIMEOUT
 
+      @chunk = false
+
       @runner_options = {
         :split_load_chunk_size => 10000,
         :generate_request_id   => false,
@@ -47,6 +49,7 @@ module GroongaClientCLI
                                     :host     => @host,
                                     :port     => @port,
                                     :read_timeout => @read_timeout,
+                                    :chunk    => @chunk,
                                     :backend  => :synchronous)
       runner = Runner.new(@client, @runner_options)
 
@@ -122,6 +125,13 @@ module GroongaClientCLI
                 "Add auto generated request ID to all commands.",
                 "(#{@runner_options[:generate_request_id]})") do |boolean|
         @runner_options[:generate_request_id] = boolean
+      end
+
+      parser.on("--[no-]chunk",
+                "Use \"Transfer-Encoding: chunked\" for load command.",
+                "HTTP only.",
+                "(#{@chunk})") do |boolean|
+        @chunk = boolean
       end
 
       command_file_paths = parser.parse(argv)
