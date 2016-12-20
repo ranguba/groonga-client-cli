@@ -1,5 +1,8 @@
 # README
 
+NOTE: This gem is merged into groonga-client gem. Use groonga-client
+instead of this.
+
 ## Name
 
 groonga-client-cli

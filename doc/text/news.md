@@ -1,5 +1,11 @@
 # NEWS
 
+## 1.0.4 - 2016-12-20
+
+### Improvements
+
+  * Merged into groonga-client gem.
+
 ## 1.0.3 - 2016-08-19
 
 ### Improvements
